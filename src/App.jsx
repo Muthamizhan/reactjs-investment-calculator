@@ -4,27 +4,31 @@ import UserInput from "./components/UserInputs";
 import { calculateInvestmentResults } from "./util/investment";
 import { InvestmentTable } from "./components/InvestmentTable";
 
+const initialValue = {
+  initialInvestment: 10000,
+  annualInvestment: 1200,
+  expectedReturn: 6,
+  duration: 10,
+};
+
 function App() {
-  const [userInput, setUserInput] = useState({
-    initialInvestment: 10000,
-    annualInvestment: 1200,
-    expectedReturn: 6,
-    duration: 10,
-  });
-  const [results, setResults] = useState([])
-  function handleValueChange(value){
-    setResults(calculateInvestmentResults(value));
-    console.log(results)
+  const [userInput, setUserInput] = useState(initialValue);
+
+  function handleChange(key, value) {
+    setUserInput((prevValue) => {
+      const newValue = { ...prevValue, [key]: +value };
+      return newValue;
+    });
   }
 
   return (
     <>
       <Header />
       <UserInput
-        userInputs={userInput}
-        onValueChangeCalculation={handleValueChange}
+        userInitialInput={userInput}
+        onValueChangeCalculation={handleChange}
       />
-      {results.length > 0 && <InvestmentTable results={results}/>}
+      <InvestmentTable userInput={userInput} />
     </>
   );
 }

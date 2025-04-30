@@ -1,66 +1,54 @@
-import { useState } from "react";
-
-export default function UserInput({ userInputs, onValueChangeCalculation }) {
-  const [userInitialInput, setUserInitialInput] = useState(userInputs);
-
-  function handleChange(key, value) {
-    setUserInitialInput((prevValue) => {
-      const newValue = { ...prevValue, [key]: +value };
-      console.log(newValue);
-      return newValue;
-    });
-  }
-
-  function handleClick() {
-    setUserInitialInput(userInputs);
-    onValueChangeCalculation(userInitialInput);
-  }
+export default function UserInput({
+  userInitialInput,
+  onValueChangeCalculation,
+}) {
   return (
     <section id="user-input">
       <div className="input-group">
-        <div>
+        <p>
           <label>Initial Investment</label>
           <input
             type="number"
-            onChange={() =>
-              handleChange("initialInvestment", event.target.value)
+            onChange={(event) =>
+              onValueChangeCalculation("initialInvestment", event.target.value)
             }
             value={userInitialInput.initialInvestment}
           />
-        </div>
-        <div>
+        </p>
+        <p>
           <label>Annual Investment</label>
           <input
             type="number"
-            onChange={() =>
-              handleChange("annualInvestment", event.target.value)
+            onChange={(event) =>
+              onValueChangeCalculation("annualInvestment", event.target.value)
             }
             value={userInitialInput.annualInvestment}
           />
-        </div>
+        </p>
       </div>
       <div className="input-group">
-        <div>
+        <p>
           <label>Expected Return</label>
           <input
             type="number"
-            onChange={() => handleChange("expectedReturn", event.target.value)}
+            onChange={(event) =>
+              onValueChangeCalculation("expectedReturn", event.target.value)
+            }
             value={userInitialInput.expectedReturn}
           />
-        </div>
-        <div>
+        </p>
+        <p>
           <label>Duration</label>
           <input
             type="number"
-            onChange={() => handleChange("duration", event.target.value)}
+            onChange={(event) =>
+              onValueChangeCalculation("duration", event.target.value)
+            }
             value={userInitialInput.duration}
           />
-        </div>
+        </p>
       </div>
 
-      <div className="input-group">
-        <button onClick={handleClick}>Calculate</button>
-      </div>
     </section>
   );
 }
